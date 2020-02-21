@@ -98,6 +98,18 @@
             app:layout_constraintRight_toLeftOf="@id/menu"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/search_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_16dp"
+            android:padding="@dimen/dimen_8dp"
+            android:src="@drawable/ic_cancel"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/search_view"
+            app:layout_constraintRight_toLeftOf="@id/menu"
+            app:layout_constraintTop_toTopOf="@+id/search_view"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

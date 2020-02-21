@@ -75,7 +75,7 @@ public class MainActivity extends PreferenceActivity implements
     private ConstraintLayout menuCont;
     private ControllerGroup controller;
     private boolean searchMode = false;
-    private ImageView menuIcon, searchIcon;
+    private ImageView menuIcon, searchIcon, searchCancelIcon;
     private PowerManager.WakeLock wakeLock;
     private GestureDetector gestureDetector;
     private SharedPreferences sharedPreferences;
@@ -169,9 +169,11 @@ public class MainActivity extends PreferenceActivity implements
         menuCont = findViewById(R.id.menu_cont);
         menuIcon = findViewById(R.id.menu);
         searchIcon = findViewById(R.id.search);
+        searchCancelIcon = findViewById(R.id.search_cancel);
         ImageView closeIcon = findViewById(R.id.close);
         menuIcon.setOnClickListener(this);
         searchIcon.setOnClickListener(this);
+        searchCancelIcon.setOnClickListener(this);
         closeIcon.setOnClickListener(this);
 
         skyView = findViewById(R.id.surface);
@@ -305,6 +307,9 @@ public class MainActivity extends PreferenceActivity implements
             case R.id.search:
                 searchSkyObject();
                 break;
+            case R.id.search_cancel:
+                cancelSearch();
+                break;
         }
     }
 
@@ -390,6 +395,7 @@ public class MainActivity extends PreferenceActivity implements
         rendererController.queueDisableSearchOverlay();
         searchMode = false;
         hideSoftKeyboard(this);
+        searchCancelIcon.setVisibility(View.GONE);
     }
 
     public void activateSearchTarget(GeocentricCoordinates target, final String searchTerm) {
@@ -401,6 +407,7 @@ public class MainActivity extends PreferenceActivity implements
         if (!autoMode) {
             controller.teleport(target);
         }
+        searchCancelIcon.setVisibility(View.VISIBLE);
     }
 
     public AstronomerModel getModel() {
@@ -433,7 +440,6 @@ public class MainActivity extends PreferenceActivity implements
     public void searchSkyObject() {
         String[] rt = getSuggestions("");
         closeMenu();
-
         search_view.setAdapter(new ArrayAdapter<>(this, R.layout.item, rt));
         search_view_red.setAdapter(new ArrayAdapter<>(this, R.layout.item_red, rt));
         search_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
